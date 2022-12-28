@@ -1,2 +1,0 @@
-login: neo4j
-haslo: xSA8XYVxZaZEWPQEdMKnmvxgA0zzmrGtsYuaxT3b2TQ
