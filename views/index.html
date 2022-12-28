@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8">
+    <title>Clouds project</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <header>
+        <h1 style = "font-size: 50px;">Social network</h1>
+    </header>
+
+    <nav>
+        <a href="/login"><input type = "button" class = "przycisk" id = "loginButton" value = "Log in"></a>
+        <a href="/register"><input type = "button" class = "przycisk" id = "registerButton" value = "Register"></a>
+        <p id = "pid"></p>
+    </nav>
+    <article>
+      <div id = "opisP">
+
+      </div>
+    </article>
+    </article>
+    <script>
+      function getPosts(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            resp = JSON.parse(this.response);
+            vis = []
+            for (const [key, value] of Object.entries(resp)) {
+              vis.push(key + ": " + value);
+            }
+            var mytable = "<table>";
+            for (var post of vis) {  mytable += "<tr>" + "<td>" + post + "</td>" + "</tr>"; }
+            mytable += "</table>";
+
+            document.getElementById("opisP").innerHTML = mytable;
+          }
+        };
+        xhttp.open("GET", "/posts", true);
+        xhttp.send();
+      }
+
+      let data1 = null;
+      fetch("/getLogin", {method: 'GET'}).then((response) => response.json()).then((data) => {
+      if(data != ("none"))
+      {
+        document.getElementById("pid").innerHTML = "<a href=\"/newPost\"><input type = \"button\" class = \"przycisk\" id = \"addPostButton\" value = \"Create new post\"></a> \
+        <input type = \"button\" class = \"przycisk\" id = \"showPostsButton\" value = \"Show posts\" onclick = \"getPosts()\" > \
+        <br> \
+        <a href=\"/addFriend\"><input type = \"button\" class = \"przycisk\" id = \"addFriendButton\" value = \"Add friend\"></a> \
+        <br> \
+        <a href=\"/logout\"><input type = \"button\" class = \"przycisk\" id = \"logoutButton\" value = \"Logout\"></a>"
+      }
+      });
+      
+    </script>
+  </body>
+</html>
